@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Kotlinoid</string>
+    <string name="hello_kotlin">Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin! Hello from Kotlin!</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_desc">Description</string>
+</resources>
