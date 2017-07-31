@@ -1,12 +1,13 @@
-package a248.kotlinoid.data
+package a248.kotlinoid.model
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.content.Context
 
 const val TABLE_NAME = "test_table"
 
 @Entity(tableName = TABLE_NAME)
-class ObjectEnity{
+class ItemEntity {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
     @ColumnInfo(name = "title") var title: String = ""
@@ -14,20 +15,20 @@ class ObjectEnity{
 }
 
 @Dao
-interface ObjectDao {
+interface ItemDao {
     @Query("SELECT * FROM $TABLE_NAME")
-    fun getAll(): List<ObjectEnity>
+    fun getAllAsLiveData(): LiveData<List<ItemEntity>>
 
     @Insert
-    fun insertAll(vararg objects: ObjectEnity)
+    fun insertAll(vararg objects: ItemEntity)
 
     @Delete
-    fun delete(objectEntity: ObjectEnity)
+    fun delete(objectEntity: ItemEntity)
 }
 
-@Database(entities = arrayOf(ObjectEnity::class), version = 1)
+@Database(entities = arrayOf(ItemEntity::class), version = 1)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun objectDao(): ObjectDao
+    abstract fun itemDao(): ItemDao
     companion object {
         private var instance: AppDatabase? = null
         fun getInstance(ctx: Context): AppDatabase? {
