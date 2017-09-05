@@ -1,4 +1,4 @@
-package a248.kotlinoid.view.utils
+package a248.kotlinoid.view.dialogs
 
 import a248.kotlinoid.R
 import a248.kotlinoid.model.ItemEntity

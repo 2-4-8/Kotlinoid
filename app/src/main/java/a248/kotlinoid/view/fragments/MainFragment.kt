@@ -1,4 +1,4 @@
-package a248.kotlinoid.view
+package a248.kotlinoid.view.fragments
 
 import a248.kotlinoid.view.adapters.MainRecyclerAdapter
 import a248.kotlinoid.R
@@ -6,6 +6,8 @@ import a248.kotlinoid.view.adapters.VerticalSpaceItemDecorator
 import a248.kotlinoid.model.AppDatabase
 import a248.kotlinoid.model.ItemEntity
 import a248.kotlinoid.model.getDb
+import a248.kotlinoid.view.SupportLifecycleFragment
+import a248.kotlinoid.view.activities.ItemActivity
 import a248.kotlinoid.viewmodel.ItemViewModel
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -18,21 +20,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import kotlinx.android.synthetic.main.fragment_main.*
 
-const val EXTRA_TITLE = "item_title"
-const val EXTRA_DESC = "item_desc"
 
 class MainFragment: SupportLifecycleFragment(){
 
     lateinit var rv: RecyclerView
     lateinit var progress: ProgressBar
-
     lateinit var adapter: MainRecyclerAdapter
-    lateinit var db: AppDatabase
-    var items: List<ItemEntity> = listOf()
     lateinit var viewModel: ItemViewModel
 
     companion object Factory {
+        const val EXTRA_TITLE = "item_title"
+        const val EXTRA_DESC = "item_desc"
         fun newInstance(): MainFragment {
             val fragment = MainFragment()
             val args = Bundle()
@@ -44,49 +44,42 @@ class MainFragment: SupportLifecycleFragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
-        viewModel.init(activity.getDb().itemDao())
-        viewModel.items?.observe(this, Observer<List<ItemEntity>> {
-            Log.d("==MainFragment", "updating UI from LiveData observer")
-            updateUI()
-        })
+        viewModel.init(activity)
+        viewModel.items?.observe(this, Observer<List<ItemEntity>> { updateUI() })
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View? = inflater?.inflate(R.layout.fragment_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?)
+            : View? = inflater?.inflate(R.layout.fragment_main, container, false)
 
-        rv = view?.findViewById(R.id.fragment_main_rv) as RecyclerView
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        rv = this.fragment_main_rv
         rv.layoutManager = LinearLayoutManager(activity)
-        adapter = MainRecyclerAdapter(items, {startItemActivity(it)}) { deleteItem(it) }
-        db = activity.getDb()
+        adapter = MainRecyclerAdapter(listOf(), {startItemActivity(it)}) { deleteItem(it) }
         rv.adapter = adapter
         rv.addItemDecoration(VerticalSpaceItemDecorator(1))
-
-        progress = view.findViewById(R.id.fragment_main_progress) as ProgressBar
-        progress.visibility = View.GONE
-
-        return view
+        progress = this.fragment_main_progress
+        progress.visibility  = View.VISIBLE
     }
 
     fun updateUI() {
-        Log.d("==MainFragment", "updating UI")
-        items = viewModel.items?.value ?: listOf()
-        adapter.items = items
+        adapter.items = viewModel.items?.value ?: listOf()
         adapter.notifyDataSetChanged()
         progress.visibility = View.GONE
     }
 
-    fun insertItem(data: ItemEntity) {
-        viewModel.addItem(data)
+    fun insertItem(item: ItemEntity) {
+        viewModel.addItem(item)
     }
 
-    fun deleteItem(obj: ItemEntity) {
-        viewModel.deleteItem(obj)
+    fun deleteItem(item: ItemEntity) {
+        viewModel.deleteItem(item)
     }
 
-    fun startItemActivity(obj: ItemEntity) {
+    fun startItemActivity(item: ItemEntity) {
         val intent = Intent(activity, ItemActivity::class.java)
-        intent.putExtra(EXTRA_TITLE, obj.title)
-        intent.putExtra(EXTRA_DESC, obj.desc)
+        intent.putExtra(EXTRA_TITLE, item.title)
+        intent.putExtra(EXTRA_DESC, item.desc)
         activity.startActivity(intent)
     }
 

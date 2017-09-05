@@ -17,8 +17,7 @@ fun ViewGroup.inflate(layoutRes: Int): View {
 class MainRecyclerAdapter(
         var items: List<ItemEntity>,
         val onClick: (ItemEntity) -> Unit,
-        val deleter: (ItemEntity) -> Unit)
-    : RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
+        val deleter: (ItemEntity) -> Unit) : RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: ItemEntity,
@@ -44,44 +43,5 @@ class VerticalSpaceItemDecorator(val height: Int): RecyclerView.ItemDecoration()
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
                                 state: RecyclerView.State) {
         outRect.bottom = height
-    }
-}
-
-class MainRecyclerAnimator: SimpleItemAnimator() {
-    override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun animateMove(holder: RecyclerView.ViewHolder?,
-                             fromX: Int, fromY: Int,
-                             toX: Int, toY: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun animateChange(oldHolder: RecyclerView.ViewHolder?,
-                               newHolder: RecyclerView.ViewHolder?,
-                               fromLeft: Int, fromTop: Int,
-                               toLeft: Int, toTop: Int): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun runPendingAnimations() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun isRunning(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun endAnimation(item: RecyclerView.ViewHolder?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun endAnimations() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

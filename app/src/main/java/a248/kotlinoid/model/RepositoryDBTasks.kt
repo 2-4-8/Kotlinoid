@@ -20,22 +20,3 @@ fun unitResultTask(preExecutor: () -> Unit,
     }
     task.execute()
 }
-
-//fun itemsResultTask(preExecutor: () -> Unit,
-//                    inBackground: () -> LiveData<List<ItemEntity>>,
-//                    postExecutor: (LiveData<List<ItemEntity>>) -> Unit) {
-//    val task = object: AsyncTask<Void, Void, LiveData<List<ItemEntity>>>() {
-//        override fun onPreExecute() {
-//            super.onPreExecute()
-//            preExecutor()
-//        }
-//        override fun doInBackground(vararg params: Void?): LiveData<List<ItemEntity>> {
-//            return inBackground()
-//        }
-//        override fun onPostExecute(result: LiveData<List<ItemEntity>>) {
-//            super.onPostExecute(result)
-//            postExecutor(result)
-//        }
-//    }
-//    task.execute()
-//}
