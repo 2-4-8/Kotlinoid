@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#fff"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/app_name"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/item_desc"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="a248.kotlinoid.model.ItemEntity"/>
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_title"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="72dp"
-        android:layout_marginEnd="72dp"
-        android:text="@string/app_name"
-        android:maxLines="1"/>
-
-    <ImageButton
-        android:id="@+id/item_delete"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@mipmap/ic_delete"
-        android:tint="#434343"
-        android:background="@null"/>
-
-</RelativeLayout>
+        android:background="#fff"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@{item.title + `(#` + item.uuid + `)`}"
+            tools:text="@string/app_name"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/item_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_title"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="72dp"
+            android:layout_marginEnd="72dp"
+            android:text="@{item.desc}"
+            tools:text="@string/app_name"
+            android:maxLines="1"/>
+        <ImageButton
+            android:id="@+id/item_delete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@mipmap/ic_delete"
+            android:tint="#434343"
+            android:background="@null"/>
+    </RelativeLayout>
+</layout>
