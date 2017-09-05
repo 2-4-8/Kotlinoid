@@ -16,8 +16,7 @@ class ItemActivity: SupportLifecycleActivity() {
         setSupportActionBar(this.toolbar)
 
         val fragmentInstance = ItemFragment.newInstance(
-                intent.getStringExtra(MainFragment.EXTRA_TITLE),
-                intent.getStringExtra(MainFragment.EXTRA_DESC)
+                intent.getIntExtra(MainFragment.EXTRA_ITEM_UUID, 0)
         )
 
         supportFragmentManager.beginTransaction()

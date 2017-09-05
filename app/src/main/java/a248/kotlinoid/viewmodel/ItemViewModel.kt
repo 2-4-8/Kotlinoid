@@ -8,6 +8,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.util.Log
+import io.reactivex.Flowable
+import io.reactivex.Single
 
 class ItemViewModel : ViewModel() {
 
@@ -21,6 +23,13 @@ class ItemViewModel : ViewModel() {
         if (items == null) {
             items = itemRepository.getItems()
         }
+    }
+
+    fun getItem(uuid: Int): Flowable<ItemEntity> {
+        var result: ItemEntity? = null
+        items?.value?.forEach { if (it.uuid == uuid) result = it }
+        if (result != null) return Flowable.just(result)
+        return itemRepository.getItemById(uuid)
     }
 
     fun addItem(item: ItemEntity) {

@@ -31,21 +31,13 @@ class MainFragment: SupportLifecycleFragment(){
     lateinit var viewModel: ItemViewModel
 
     companion object Factory {
-        const val EXTRA_TITLE = "item_title"
-        const val EXTRA_DESC = "item_desc"
+        const val EXTRA_ITEM_UUID = "extra_uuid"
         fun newInstance(): MainFragment {
             val fragment = MainFragment()
             val args = Bundle()
             fragment.arguments = args
             return fragment
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
-        viewModel.init(activity)
-        viewModel.items?.observe(this, Observer<List<ItemEntity>> { updateUI() })
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?)
@@ -60,6 +52,13 @@ class MainFragment: SupportLifecycleFragment(){
         rv.addItemDecoration(VerticalSpaceItemDecorator(1))
         progress = this.fragment_main_progress
         progress.visibility  = View.VISIBLE
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
+        viewModel.init(activity)
+        viewModel.items?.observe(this, Observer<List<ItemEntity>> { updateUI() })
     }
 
     fun updateUI() {
@@ -78,8 +77,7 @@ class MainFragment: SupportLifecycleFragment(){
 
     fun startItemActivity(item: ItemEntity) {
         val intent = Intent(activity, ItemActivity::class.java)
-        intent.putExtra(EXTRA_TITLE, item.title)
-        intent.putExtra(EXTRA_DESC, item.desc)
+        intent.putExtra(EXTRA_ITEM_UUID, item.uuid)
         activity.startActivity(intent)
     }
 

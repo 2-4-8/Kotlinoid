@@ -45,7 +45,11 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     kapt 'com.android.databinding:compiler:2.3.0'
 
+    compile "io.reactivex.rxjava2:rxjava:2.1.0"
+    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
+
     compile "android.arch.persistence.room:runtime:$arch_room_version"
+    compile "android.arch.persistence.room:rxjava2:$arch_room_version"
     compile "android.arch.lifecycle:runtime:$arch_room_version"
     compile "android.arch.lifecycle:extensions:$arch_room_version"
     kapt "android.arch.lifecycle:compiler:$arch_room_version"

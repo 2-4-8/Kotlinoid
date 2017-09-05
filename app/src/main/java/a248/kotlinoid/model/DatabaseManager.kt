@@ -3,6 +3,8 @@ package a248.kotlinoid.model
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.content.Context
+import io.reactivex.Flowable
+import io.reactivex.Single
 
 const val TABLE_NAME = "test_table"
 
@@ -18,6 +20,9 @@ class ItemEntity {
 interface ItemDao {
     @Query("SELECT * FROM $TABLE_NAME")
     fun getAllAsLiveData(): LiveData<List<ItemEntity>>
+
+    @Query("SELECT * FROM $TABLE_NAME WHERE uuid = :uuid")
+    fun getItemById(uuid: Int): Flowable<ItemEntity>
 
     @Insert
     fun insertAll(vararg objects: ItemEntity)
